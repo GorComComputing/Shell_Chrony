@@ -1,82 +1,50 @@
 package main
 
 import (
-    "fmt"
-    "os"
-    
-    "bufio"
-    "strings"
-    "net/http"
+    //"fmt"
 )
 
-var exit_status bool = true
 
+// Command list for interpretator
+var cmd =  map[string]func([]string)string{
+	"tst": cmd_tst,
+	"ls": cmd_ls,
+	"start": cmd_start,
+        "stop": cmd_stop,
+	"restart": cmd_restart,
+	/*"read": config_read,
+        "write": config_write,
+        "replace": replace,
+        "cp": cp,
+        "bcp": bcp,
+        "restore": restore,
+        "scan": scan,
+        "save": save,*/
+	"quit": cmd_quit,
+	"isactive": cmd_isActive,
+	"activity": cmd_activity,
+	"tracking": cmd_tracking,
+	"sources": cmd_sources,
+	"sourcestats": cmd_sourcestats,
+	"clients": cmd_clients,
+	"config": cmd_config,
+	"restore": cmd_restore,
+	"write": cmd_write,
+	"save": cmd_save,
+	
 
-// http handler
-func http_api(w http.ResponseWriter, r *http.Request) {
-	// parameters from POST or GET
-        r.ParseForm()
-	words := []string{}
-
-	for _, values := range r.Form {   // range over map
-  		for _, value := range values {    // range over []string
-     			words = append(words, value)
-  		}
-	}
-	interpretator(words)
 }
 
-
-func main() {
-	var cmd_line string
-	var words = make([]string, len(os.Args)-1)
-
-	if len(os.Args)>1 {
-        	copy(words[0:], os.Args[1:])
-                exit_status = false
-        	interpretator(words)
-		os.Exit(0)
-	}
-
-	// Page routs
-	http.HandleFunc("/api", http_api)
-	fmt.Println("WebServer started OK. Try http://192.168.1.136:8084")
-	go http.ListenAndServe(":8084", nil)
-
-	for exit_status {
-		fmt.Print("Chrony Shell> ")
-		// ввод строки с пробелами
-    		scanner := bufio.NewScanner(os.Stdin)
-    		scanner.Scan()
-    		cmd_line = scanner.Text()
-    		// разбиение на подстроки по пробелу
-    		words = strings.Fields(cmd_line)
-   		
-		interpretator(words)
-	}
-}
 
 
 // Interpretator 
-func interpretator(words []string) {
-		switch words[0] {
-                case "tst": tst(words)
-                case "ls": ls(words)
-                case "start": start()
-                case "stop": chrony_stop()
-                case "restart": chrony_restart()
-                case "read": config_read(words)
-                case "write": config_write(words)
-                case "replace": replace(words)
-                case "cp": cp(words)
-                case "bcp": bcp(words)
-                case "restore": restore(words)
-                case "scan": scan()
-                case "save": save()
-
-                case "quit": exit_status = false
-		default: fmt.Println("Unknown command: " + words[0])
-                }
+func interpretator(words []string) string {
+	if _, ok := cmd[words[0]]; ok {
+		return cmd[words[0]](words)
+	} else{
+		//fmt.Println("Unknown command: " + words[0])
+		return "Unknown command: " + words[0] + "\n"
+	}
 }
 
 
