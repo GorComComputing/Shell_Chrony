@@ -660,7 +660,7 @@ func cmd_write(words []string) string {
 func cmd_save(words []string) string {
 	var output string
 	text := strings.SplitAfter(words[1], "=")[1]
-			
+				
     	file, err := os.OpenFile("./files/tmp.conf", os.O_TRUNC | os.O_WRONLY, 0600)
     	if err != nil {
         	//fmt.Println("Unable to open file:", err)

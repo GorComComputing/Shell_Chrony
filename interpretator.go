@@ -31,6 +31,12 @@ var cmd =  map[string]func([]string)string{
 	"restore": cmd_restore,
 	"write": cmd_write,
 	"save": cmd_save,
+	"top": cmd_top,
+	"netstat": cmd_netstat,
+	"kill": cmd_kill,
+	"killall": cmd_killall,
+	"run": cmd_run,
+	"db": MakeRequest,
 	
 
 }
