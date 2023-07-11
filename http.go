@@ -16,11 +16,12 @@ var chan_isActive chan string = make(chan string, 100)
 // /api handler
 func http_pars(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)	// enable CORS
+	
 	// parameters from POST or GET
         r.ParseForm()
 	words := []string{}
 
-	for param, values := range r.Form {   // range over map
+	for param, values := range r.Form {   	  // range over map
   		for _, value := range values {    // range over []string
      			if param == "cmd" {
 				words = strings.Fields(value)
@@ -29,14 +30,10 @@ func http_pars(w http.ResponseWriter, r *http.Request) {
 			}
   		}
 	}
-	//fmt.Println(words)
 	out := interpretator(words)
 	if len(out) > 0 {
-		//fmt.Print(out)
 		fmt.Fprintf(w, out)
 	}
-	
-
 }
 
 

@@ -12,14 +12,6 @@ var cmd =  map[string]func([]string)string{
 	"start": cmd_start,
         "stop": cmd_stop,
 	"restart": cmd_restart,
-	/*"read": config_read,
-        "write": config_write,
-        "replace": replace,
-        "cp": cp,
-        "bcp": bcp,
-        "restore": restore,
-        "scan": scan,
-        "save": save,*/
 	"quit": cmd_quit,
 	"isactive": cmd_isActive,
 	"activity": cmd_activity,
@@ -48,7 +40,6 @@ func interpretator(words []string) string {
 	if _, ok := cmd[words[0]]; ok {
 		return cmd[words[0]](words)
 	} else{
-		//fmt.Println("Unknown command: " + words[0])
 		return "Unknown command: " + words[0] + "\n"
 	}
 }

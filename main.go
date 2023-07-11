@@ -19,6 +19,7 @@ func main() {
 	// pars command line args
 	if len(os.Args) > 1 {
 
+		// TUI mode
 		if os.Args[1] == "-w"{
                         fmt.Println("Window")
                         os.Exit(0)

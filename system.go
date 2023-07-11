@@ -42,13 +42,10 @@ func cmd_top(words []string) string {
 	cmd := exec.Command("top", "-n", "1")
 	out, err := cmd.Output()
 	if err != nil {
-		//fmt.Println("start FAIL: ", err)
 		output = "top FAIL: " + err.Error() + "\n"
 	} else {
-		//fmt.Println("start OK")
 		output = string(out)
 	}
-	//if len(out) > 0 {fmt.Println(string(out))}
 	return output 
 }
 
@@ -58,17 +55,12 @@ func cmd_netstat(words []string) string {
 	cmd := exec.Command("netstat", "-a")
 	out, err := cmd.Output()
 	if err != nil {
-		//fmt.Println("start FAIL: ", err)
 		output = "netstat FAIL: " + err.Error() + "\n"
 	} else {
-		//fmt.Println("start OK")
 		output = string(out)
-		//if len(out) > 0 {fmt.Println(string(out))}
 	}
-	//if len(out) > 0 {fmt.Println(string(out))}
 	return output 
 }
-
 
 
 // Завершить процесс по PID
@@ -100,31 +92,5 @@ func cmd_killall(words []string) string {
 	return output 
 }
 
-
-func MakeRequest(words []string) string {
-	var output string
-	
-	db_host := "http://192.168.1.136"
-	db_port := "8086"
-	
-	db_Query := "select"
-	
-	resp, err := http.Get(db_host + ":" + db_port + "/api?cmd=" + db_Query)
-	if err != nil {
-		output = "Request FAIL: " + err.Error() + "\n"
-		return output
-	}
-
-	body, err := ioutil.ReadAll(resp.Body)
-	if err != nil {
-		output = "Request FAIL: " + err.Error() + "\n"
-		return output
-	}
-
-	//reqArr := strings.Fields(string(body))
-	//fmt.Println(reqArr)
-
-	return string(body) 
-}
 
 
