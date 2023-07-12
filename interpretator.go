@@ -28,7 +28,9 @@ var cmd =  map[string]func([]string)string{
 	"kill": cmd_kill,
 	"killall": cmd_killall,
 	"run": cmd_run,
-	"db": MakeRequest,
+	//"db": MakeRequest,
+	
+	"curl": cmd_curl,
 	
 
 }
